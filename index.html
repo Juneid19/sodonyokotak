@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>iframe tester</title>
+    <link rel="stylesheet" href="https://public.codepenassets.com/css/reset-2.0.min.css">
+
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lodiko Sodonyo- Qori Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        :root {
+            --neon-color: #ff6b6b;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0b0b14;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex; justify-content: center;
+        }
+
+        .app-container {
+            width: 100%; max-width: 450px; height: 100%;
+            background: radial-gradient(circle at top, #1e1e3f, #0b0b14);
+            position: relative; display: flex; flex-direction: column; padding: 20px;
+        }
+
+        .header h1 {
+            text-align: center; font-size: 1rem; letter-spacing: 4px;
+            font-weight: 700; margin-top: 10px; opacity: 0.8;
+            text-shadow: 0 0 10px var(--neon-color);
+        }
+
+        .visualizer-area {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+
+        .main-cover {
+            width: 72vw; max-width: 250px; height: 72vw; max-width: 250px;
+            border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .main-cover.playing {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.2);
+        }
+
+        .main-cover img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+
+        .info-card {
+            background: var(--glass-bg); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 12px 15px; width: 85%;
+            margin: 35px auto; text-align: center;
+        }
+
+        .marquee-container { width: 100%; overflow: hidden; white-space: nowrap; }
+
+        #songTitle {
+            display: inline-block; font-size: 1rem; font-weight: 600;
+            padding-left: 100%; animation: marquee 12s linear infinite;
+        }
+
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .artist-name { color: var(--neon-color); font-size: 0.8rem; margin-top: 2px; opacity: 0.8; }
+
+        .bottom-controls { padding-bottom: 40px; }
+
+        .volume-box { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding: 0 25px; }
+
+        input[type=range] { flex: 1; height: 4px; accent-color: var(--neon-color); cursor: pointer; }
+
+        .play-pause-btn {
+            width: 75px; height: 75px; border-radius: 50%; background: #fff;
+            color: #0b0b14; border: none; font-size: 1.8rem; margin: 0 auto;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .live-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255, 71, 71, 0.1); padding: 4px 12px;
+            border-radius: 20px; color: #ff4747; font-size: 0.6rem;
+            font-weight: 700; margin-bottom: 25px; border: 1px solid rgba(255, 71, 71, 0.2);
+        }
+
+        .dot { width: 5px; height: 5px; background: #ff4747; border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="header">
+            <h1>LODIKO SODONYO</h1>
+        </header>
+
+        <div class="visualizer-area">
+            <div class="live-badge">
+                <div class="dot"></div> LIVE STREAMING
+            </div>
+            
+            <div class="main-cover" id="coverContainer">
+                <img src="https://www.radioplug.co.uk/img/channel/06-07-2019-08-11-00.png" id="coverArt" alt="Cover">
+            </div>
+
+            <div class="info-card">
+                <div class="marquee-container">
+                    <h2 id="songTitle">Menghubungkan...</h2>
+                </div>
+                <p class="artist-name" id="artistName">Live Streaming</p>
+            </div>
+        </div>
+
+        <div class="bottom-controls">
+            <div class="volume-box">
+                <i class="fas fa-volume-down" style="font-size: 0.8rem; opacity: 0.4;"></i>
+                <input type="range" id="volumeSlider" min="0" max="100" value="80">
+                <i class="fas fa-volume-up" style="font-size: 0.8rem; opacity: 0.4;"></i>
+            </div>
+            <button class="play-pause-btn" id="playBtn">
+                <i class="fas fa-play" id="playIcon" style="margin-left: 5px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <audio id="audioPlayer" crossorigin="anonymous"></audio>
+
+    <script>
+        // --- DATABASE QORI ---
+        const RECITER_COVERS = {
+            'mishary': 'https://i.ytimg.com/vi/GLMp_EGGLfk/hq720.jpg?sqp=-oaymwExCK4FEIIDSFryq4qpAyMIARUAAIhCGAHwAQH4AdQGgALgA4oCDAgAEAEYciBWKDgwDw==&rs=AOn4CLAa_DZgLB8D4xcMTFPgxpnQghg_sw',
+            'abdul': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT99qAcwhSDEUMmxHHzjEfna9YVgtg-04A8rDvXbaNtZf-70ZkRxFPl_i5J_he-DnfdtO7EhS0ouUaiu-hq_bE8Ni9U3xKBjsAdFgzAg4w&s=10',
+            'adi hidayat': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi7cw0cL0cs4aqyXA5sbBMBaCWGmW0D28pzruJKEWXlx9RYeQLuZouy9VlqLk9oWvOxlO7jHAh6QOXhjPyKPQZqz2rez4YV5XOPrgTTQ&s=10',
+            'zainuddin': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDo4WarU6dxMHRx3BFqisexu4euGqv9Ni9_JZA5jZBwA&s=10',
+            'latif': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSgeut2z_VzZzl5_B7sbcdxL2FkG3Rd3dOTaS3WCOXEA&s=10',
+            'al sudais': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Abdulrahman_Al-Sudais.jpg/440px-Abdulrahman_Al-Sudais.jpg',
+            'ghamdi': 'https://i.ibb.co/Wp0y1hG/ghamdi.jpg',
+            'shatri': 'https://i.ibb.co/fQ5N204/shatri.jpg',
+            'abdul basit': 'https://i.ibb.co/RzM805h/abdulbasit.jpg'
+        };
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const coverContainer = document.getElementById('coverContainer');
+        const songTitle = document.getElementById('songTitle');
+        const artistName = document.getElementById('artistName');
+        const coverArt = document.getElementById('coverArt');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        const STREAM_URL = 'https://stream.zeno.fm/nztzeroxluuuv';
+        const ZENO_ID = 'rbyfkkararzuv';
+        const DEFAULT_IMG = 'https://www.radioplug.co.uk/img/channel/06-07-2019-08-11-00.png';
+
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                audioPlayer.src = STREAM_URL;
+                audioPlayer.play();
+                isPlaying = true;
+                playIcon.className = "fas fa-pause";
+                playIcon.style.marginLeft = "0";
+                coverContainer.classList.add('playing');
+            } else {
+                audioPlayer.pause();
+                audioPlayer.src = "";
+                isPlaying = false;
+                playIcon.className = "fas fa-play";
+                playIcon.style.marginLeft = "5px";
+                coverContainer.classList.remove('playing');
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audioPlayer.volume = e.target.value / 100;
+        });
+
+        function updateMeta() {
+            fetch(`https://zenoplay.zenomedia.com/api/zenofm/nowplaying/${ZENO_ID}/?t=${Date.now()}`)
+                .then(r => r.json())
+                .then(data => {
+                    const title = data.title || "Firza Radio Padang";
+                    const artist = data.artist || "Live Streaming";
+                    
+                    if (songTitle.innerText !== title) {
+                        songTitle.innerText = title;
+                        artistName.innerText = artist;
+                        
+                        // LOGIK PENGESANAN QORI (Case Insensitive)
+                        let foundReciter = false;
+                        const fullInfo = (title + ' ' + artist).toLowerCase();
+
+                        for (let key in RECITER_COVERS) {
+                            if (fullInfo.includes(key.toLowerCase())) {
+                                coverArt.src = RECITER_COVERS[key];
+                                foundReciter = true;
+                                break;
+                            }
+                        }
+
+                        // Jika tiada dalam database Qori, cari cover di iTunes
+                        if (!foundReciter) {
+                            fetchCover(title, artist);
+                        }
+                    }
+                }).catch(() => {});
+        }
+
+        function fetchCover(t, a) {
+            fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(t + ' ' + a)}&entity=song&limit=1`)
+                .then(r => r.json())
+                .then(res => {
+                    if (res.results.length > 0) {
+                        coverArt.src = res.results[0].artworkUrl100.replace('100x100', '800x800');
+                    } else {
+                        coverArt.src = DEFAULT_IMG;
+                    }
+                }).catch(() => coverArt.src = DEFAULT_IMG);
+        }
+
+        setInterval(updateMeta, 10000);
+        updateMeta();
+    </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
